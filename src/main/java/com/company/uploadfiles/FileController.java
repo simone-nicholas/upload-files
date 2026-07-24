@@ -1,6 +1,6 @@
 package com.company.uploadfiles;
 
-import com.company.uploadfiles.service.ImageService;
+import com.company.uploadfiles.service.FileService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,26 +11,26 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/v1")
-public class imageController {
-    private final ImageService imageService;
+public class FileController {
+    private final FileService fileService;
 
-    public imageController(ImageService imageService) {
-        this.imageService = imageService;
+    public FileController(FileService fileService) {
+        this.fileService = fileService;
     }
 
     @PostMapping("/upload")
     public ResponseEntity<?> uploadImage(
             @RequestParam(value = "image", required = true) MultipartFile file,
-            @RequestParam("description") String description
+            @RequestParam(value = "description", required = true) String description
     ) throws IOException {
-        String uploadImage = imageService.uploadImage(file, description);
+        String uploadImage = fileService.uploadImage(file, description);
 
         return ResponseEntity.ok(uploadImage);
     }
 
     @GetMapping("/download/{filename}")
     public ResponseEntity<?> downloadImage(@PathVariable("filename") String fileName) {
-        byte[] imageData = imageService.downloadImage(fileName);
+        byte[] imageData = fileService.downloadImage(fileName);
 
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.valueOf("image/png")).body(imageData);
     }

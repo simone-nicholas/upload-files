@@ -7,7 +7,7 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ImageUtilsTest {
+class FileUtilsTest {
     @Test
     void decompressImage_shouldReturnTrue() throws IOException {
         byte[] originalImg = new byte[1000];
@@ -15,8 +15,8 @@ class ImageUtilsTest {
         Random r = new Random();
         r.nextBytes(originalImg);
 
-        byte[] compressedImg = ImageUtils.compressImage(originalImg);
-        byte[] decompressedImg = ImageUtils.decompressImage(compressedImg);
+        byte[] compressedImg = FileUtils.compressImage(originalImg);
+        byte[] decompressedImg = FileUtils.decompressImage(compressedImg);
 
         assertArrayEquals(originalImg, decompressedImg);
     }

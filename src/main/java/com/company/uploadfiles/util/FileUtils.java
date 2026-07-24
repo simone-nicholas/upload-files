@@ -1,10 +1,12 @@
 package com.company.uploadfiles.util;
 
+import org.springframework.http.HttpStatus;
+
 import java.io.ByteArrayOutputStream;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
-public class ImageUtils {
+public class FileUtils {
     public static byte[] compressImage(byte[] data) {
         Deflater deflater = new Deflater();
         deflater.setLevel(Deflater.BEST_COMPRESSION);
@@ -20,6 +22,8 @@ public class ImageUtils {
         try {
             outputStream.close();
         } catch (Exception ignored) {
+            HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            System.err.println("Error " + httpStatus + " :: " + ignored.getMessage());
         }
         return outputStream.toByteArray();
     }
@@ -36,6 +40,8 @@ public class ImageUtils {
             }
             outputStream.close();
         } catch (Exception ignored) {
+            HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            System.err.println("Error " + httpStatus + " :: " + ignored.getMessage());
         }
         return outputStream.toByteArray();
     }

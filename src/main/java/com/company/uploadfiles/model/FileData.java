@@ -19,11 +19,12 @@ import java.util.UUID;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(exclude = "imageData")
 @Builder
-public class ImageData {
+public class FileData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Builder.Default
     @EqualsAndHashCode.Include
     @Column(nullable = false, unique = true, updatable = false)
     private UUID uuid = UUID.randomUUID();
