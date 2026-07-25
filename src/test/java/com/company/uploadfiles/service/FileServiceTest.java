@@ -3,21 +3,17 @@ package com.company.uploadfiles.service;
 import com.company.uploadfiles.FileRepository;
 import com.company.uploadfiles.model.FileData;
 import com.company.uploadfiles.util.FileUtils;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
 
 import java.io.IOException;
 import java.util.Optional;
-import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -66,5 +62,26 @@ class FileServiceTest {
 
         // Then
         assertArrayEquals(originalBytes, result);
+    }
+
+    @Test
+    void downloadImage_shouldReturnNotFound() {
+        String fileName = "test";
+
+        // Given
+        byte[] originalBytes = {54, 23, 23, 52, 53, 12};
+        byte[] compressedBytes = FileUtils.compressImage(originalBytes);
+
+        FileData fileD = new FileData();
+        fileD.setName(fileName);
+        fileD.setImageData(compressedBytes);
+
+        when(fileRepository.findByName(fileName)).thenReturn(Optional.empty());
+
+        // When
+        byte[] result = fileService.downloadImage(fileName);
+
+        // Then
+        assertNull(result);
     }
 }
