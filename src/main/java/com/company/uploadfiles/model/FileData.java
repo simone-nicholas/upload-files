@@ -3,7 +3,7 @@ package com.company.uploadfiles.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
@@ -43,7 +43,7 @@ public class FileData {
 
     @Column(nullable = false)
     @NotNull
-    @Positive
+    @PositiveOrZero
     private Long size;
 
     @JdbcTypeCode(SqlTypes.VARBINARY)
